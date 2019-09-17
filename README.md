@@ -1,4 +1,4 @@
-# Welcome
+# Welcome!
 
 Repository for all **5** homework assignments for *STAT 545A*:
 
@@ -14,6 +14,6 @@ Assignment 05 | hw05 | Oct. 18
 
 Hi, my name is Kristina!  I am a first year Bioinformatics Master's student at the Univeristy of British Columbia.  I have graduated with my Bachelor's Degree from Simon Fraser University in Molecular Biology and Biochemistry.  :octocat: 
 
-![](SFU19-PB-3107.jpg){width=30%}
+![](SFU19-PB-3107.jpg)
 
 Here is [my GitHub profile](https://github.com/kristinawright).
