@@ -1,9 +1,3 @@
----
-title: "hw01_gapminder"
-output:
-  html_document:
-    keep_md: true
----
 
 ## Loading the Dataset
 
