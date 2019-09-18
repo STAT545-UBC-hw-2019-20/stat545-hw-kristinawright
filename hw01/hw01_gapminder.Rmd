@@ -1,8 +1,8 @@
 ---
 title: "hw01_gapminder"
 output:
-  github_document: default
-  md_document: default
+  html_document:
+    keep_md: true
 ---
 
 ## Loading the Dataset
