@@ -8,7 +8,7 @@ output:
 ## Loading the Dataset
 
 R has a dataset called gapminder, which the following code loads, along with ggplot2 for plotting graphs:
-
+ 
 
 ```r
 library(gapminder)
