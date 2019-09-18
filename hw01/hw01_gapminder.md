@@ -1,14 +1,9 @@
----
-title: "hw01_gapminder"
-output:
-  html_document:
-    keep_md: true
----
+# GAPMINDER EXERCISE 2 
 
 ## Loading the Dataset
 
 R has a dataset called gapminder, which the following code loads:
-
+ 
 
 ```r
 library(gapminder)
