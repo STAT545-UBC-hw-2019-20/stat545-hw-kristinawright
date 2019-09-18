@@ -9,7 +9,7 @@ library(gapminder)
 library(ggplot2)
 ```
 
-
+ 
 ## Variables
 
 Here are the variables for gapminder after running the following code:
