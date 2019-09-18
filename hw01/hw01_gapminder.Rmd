@@ -7,11 +7,10 @@ output:
 
 ## Loading the Dataset
 
-R has a dataset called gapminder, which the following code loads, along with ggplot2 for plotting graphs:
+R has a dataset called gapminder, which the following code loads:
 
 ```{r load}
 library(gapminder)
-library(ggplot2)
 ```
 
 
@@ -39,12 +38,12 @@ Here is a summary of statistics of gapminder after running the following code:
 summary(gapminder)
 ```
 
-## Life Expectancy vs. Year
+## Countries
 
-Plot of lifeExp vs. year using the following code:
+Here is a list of countries within the gapminder dataset using the following code:
 
 ```{r}
-ggplot(gapminder, aes(year, lifeExp)) +
-  geom_line(colour = "blue")
+(unique(gapminder$country))
 ```
+
 
