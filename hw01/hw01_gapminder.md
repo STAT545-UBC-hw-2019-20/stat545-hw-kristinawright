@@ -68,7 +68,7 @@ summary(gapminder)
 ##  Max.   :1.319e+09   Max.   :113523.1  
 ## 
 ```
-
+ 
 ## Countries
 
 Here is a list of countries within the gapminder dataset using the following code:
