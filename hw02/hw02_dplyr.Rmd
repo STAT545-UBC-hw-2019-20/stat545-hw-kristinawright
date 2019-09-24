@@ -16,6 +16,7 @@ library(tidyverse)
 library(gapminder)
 library(datasets)
 library(DT)
+library(shiny)
 ```
 
 ## 1.1
