@@ -32,7 +32,7 @@ gapminder1.1 <- (gapminder %>%
 gapminder1.1
 ```
 
-## 1.2
+## 1.2 
 
 Show variables country and gdpPercap only from gapminder1.1:
 ```{r}
