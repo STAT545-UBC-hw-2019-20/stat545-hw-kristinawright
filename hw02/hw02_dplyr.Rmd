@@ -1,8 +1,10 @@
 ---
 title: "hw02_dplyr"
-output: html_document
----
- 
+output: 
+ html_document:
+    keep_md: true
+---    
+    
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -138,7 +140,7 @@ No, the following code is incorrect to get data for Rwanda and Afghanistan:
 ```{r}
 filter(gapminder, country == c("Rwanda", "Afghanistan"))
 ```
-
+ 
 Because creating multiple entries means both values will not be check for the condition to be true. This is the correct way to check for both:
 ```{r}
 filter(gapminder, country == "Rwanda" | country == "Afghanistan")
