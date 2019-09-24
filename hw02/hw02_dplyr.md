@@ -14,7 +14,6 @@ Load tidyverse, gapminder, and datasets:
 library(tidyverse)
 library(gapminder)
 library(datasets)
-library(DT)
 ```
 
 ## 1.1
