@@ -132,4 +132,15 @@ ggplot(Loblolly, aes(Seed, height)) +
 
 Seed type 305 appears to have the highest trees, while seed type 329 has the shortest.
 
+## Recycling
+
+No, the following code is incorrect to get data for Rwanda and Afghanistan:
+```{r}
+filter(gapminder, country == c("Rwanda", "Afghanistan"))
+```
+
+Because creating multiple entries means both values will not be check for the condition to be true. This is the correct way to check for both:
+```{r}
+filter(gapminder, country == "Rwanda" | country == "Afghanistan")
+```
 
