@@ -1,0 +1,27 @@
+---
+title: "hw03-exercises"
+output: 
+  html_document:
+    keep_md: true
+    theme: paper
+---
+ 
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(gapminder)
+library(ggridges)
+library(scales)
+```
+
+<!---The following chunk allows errors when knitting--->
+
+```{r allow errors, echo = FALSE}
+knitr::opts_chunk$set(error = TRUE, warning = FALSE)
+```
+
+## write down your thoughts like a cheat sheet
+## Pick three of the six tasks below, and produce:
+- a tibble, using dplyr as your data manipulation tool;
+- an accompanying plot of data from the tibble, using ggplot2 as your visualization tool; and
+- some dialogue about what your tables/figures show (doesn’t have to be much).
+
