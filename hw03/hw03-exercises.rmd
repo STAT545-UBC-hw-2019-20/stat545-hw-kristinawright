@@ -11,6 +11,7 @@ library(tidyverse)
 library(gapminder)
 library(ggridges)
 library(scales)
+library(DT)
 ```
 
 <!---The following chunk allows errors when knitting--->
@@ -24,4 +25,49 @@ knitr::opts_chunk$set(error = TRUE, warning = FALSE)
 - a tibble, using dplyr as your data manipulation tool;
 - an accompanying plot of data from the tibble, using ggplot2 as your visualization tool; and
 - some dialogue about what your tables/figures show (doesn’t have to be much).
+
+```{r}
+DT::datatable(gapminder)
+```
+
+
+# Option 1: Abundance of countries with low life expectancy over time by continent
+
+Well, what is considered a low life expectancy? Lets take the median age for all life expectancies in the gapminder data frame and use it as our criteria to determine if life expectancy is high or low:
+```{r}
+median(gapminder$lifeExp)
+```
+
+
+So 60.7 is considered neither high or low life expectancy, but below this number is considered low and above is high.
+
+Lets take our gapminder data frame and add a column called lowLifeExp (low life expectancy) to see if the life expectancy is less than 60.7. Next we will filter gapminder so that we only have rows with low life expectancies where lowLifeExp equals TRUE. After grouping gapminder by continent and year, we can count the number of observations for each group to find the number of countries on each continent have a life expectancy less than 60.7 for each year, with its mean life expectancy, using the summarize function. Here is the data:
+```{r}
+DT::datatable(gapminder_option1 <- gapminder %>%
+  mutate(lowLifeExp = lifeExp < 60.7) %>%
+  filter(lowLifeExp == TRUE) %>%
+  group_by(continent, year) %>%
+  summarize(meanLifeExp = mean(lifeExp), n = n()))
+```
+
+Lets plot our findings for a more visually pleasing way. We'll make a new plot for each continent where its points represent the average life expectancy for a plot of number of countries with low life expectancy vs. year:
+```{r, fig.width = 10, fig.height = 3}
+ggplot(gapminder_option1, aes(year, n, size = meanLifeExp,  fill = continent)) +
+  facet_wrap(~ continent, nrow = 1) +
+  geom_point(shape = 21) +
+  ylab('# of countries') +
+  ggtitle('Number of Countries with Low Life Expectancy Over Time') +
+  labs(size = "mean life expectancy")
+```
+RESULTS: Africa has the highest number of countries with a low life expectancy.  Europe has a low life expectancy only from 1952 till 1977.  Oceania has a high life expectancy from 1952 to 2007.
+
+Note: Oceania has no life Expectancies below the threshold 60.7 and, therefore, has no low life expectancy from 1952 to 2007 with no plot depicted above
+
+```{r}
+gapminder %>%
+  filter(continent == 'Oceania' & lifeExp < 60.7) 
+```
+
+
+# Option 2
 
