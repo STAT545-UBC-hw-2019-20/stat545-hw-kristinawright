@@ -6,12 +6,14 @@ output:
     theme: paper
 ---
  
+Loading the r packages:
 ```{r, message = FALSE, warning = FALSE}
 library(tidyverse)
 library(gapminder)
 library(ggridges)
 library(scales)
 library(DT)
+library(tsibble)
 ```
 
 <!---The following chunk allows errors when knitting--->
@@ -19,13 +21,6 @@ library(DT)
 ```{r allow errors, echo = FALSE}
 knitr::opts_chunk$set(error = TRUE, warning = FALSE)
 ```
-
-## write down your thoughts like a cheat sheet
-## Pick three of the six tasks below, and produce:
-- a tibble, using dplyr as your data manipulation tool;
-- an accompanying plot of data from the tibble, using ggplot2 as your visualization tool; and
-- some dialogue about what your tables/figures show (doesn’t have to be much).
-
 
 
 # Option 1: Abundance of countries with low life expectancy over time by continent
@@ -47,14 +42,15 @@ DT::datatable(gapminder_option1 <- gapminder %>%
   summarize(meanLifeExp = mean(lifeExp), n = n()))
 ```
 
-Lets plot our findings for a more visually pleasing way. We'll make a new plot for each continent where its points represent the average life expectancy for a plot of number of countries with low life expectancy vs. year:
+Lets plot our findings for a more visually pleasing way. We'll make a new plot for each continent using facet_wrap, where the points represent the average life expectancy for a plot of number of countries with low life expectancy vs. year:
 ```{r, fig.width = 10, fig.height = 3}
 ggplot(gapminder_option1, aes(year, n, size = meanLifeExp,  fill = continent)) +
   facet_wrap(~ continent, nrow = 1) +
   geom_point(shape = 21) +
   ylab('# of countries') +
   ggtitle('Number of Countries with Low Life Expectancy Over Time') +
-  labs(size = "mean life expectancy")
+  labs(size = "mean life expectancy") +
+  theme_bw()
 ```
 RESULTS: Africa has the highest number of countries with a low life expectancy.  Europe has a low life expectancy only from 1952 till 1977.  Oceania has a high life expectancy from 1952 to 2007.
 
@@ -67,29 +63,46 @@ gapminder %>%
 
 
 # Option 2: Minimum and maximum GDP per capita
-```{r}
-DT::datatable(gapminder)
-```
 
 In order to find the minimum and maximum GDP per capita for all continents, we will group gapminder by continent. Next, 4 new columns will be made for the minimum GDP per capita (min_gdp) and its corresponding country (country_min_gdp), and the maximum GDP per capita (max_gdp) and its corresponding country (country_max_gdp):
 ```{r}
-gapminder_option2 <- gapminder %>% 
+knitr::kable(gapminder_option2 <- gapminder %>% 
   group_by(continent) %>%
   summarize(min_gdp = min(gdpPercap), country_min_gdp = country[gdpPercap == min_gdp],
-            max_gdp = max(gdpPercap), country_max_gdp = country[gdpPercap == max_gdp])
-gapminder_option2
+            max_gdp = max(gdpPercap), country_max_gdp = country[gdpPercap == max_gdp]))
 ```
 
 Here is a plot of our results.  Displayed is a bar graph of log10 of GDP per capita for its minimum and maximum for each continent.  Red is for the maximum GDP per capita and blue is for the minimum GDP per capita.  Alpha is set to 0.3 to see the layered bar graphs:
 ```{r, fig.width = 8, fig.height = 5}
-ggplot(gapminder_option2, aes(continent, y , color = variable)) +
+ggplot(gapminder_option2, aes(continent, y , color = GDP)) +
   geom_col(aes( y = min_gdp, col = "min_gdp", alpha = 0.3)) +
   geom_col(aes( y = max_gdp, col = "max_gdp", alpha = 0.3)) +
   ylab("log(GDP per capita)") +
   scale_y_log10(labels = scales::dollar_format()) +
-  ggtitle("Minimum and Maximum GDP per Capita vs. Continent ")
+  ggtitle("Minimum and Maximum GDP per Capita vs. Continent ") 
+```
+RESULTS: Asia has the highest GDP per capita while Africa has the lowest GDP per capita of the 5 continents for the period between 1952 to 2007
+
+
+# Option 5: Change in continental life expectancy over time
+
+How is life expectancy changing over time on different continents? First, lets group our gapminder data by country and arrange by year.  Now we can calculate the increase in life expectancy (incLifeExp) in a new column by finding the difference in life expectancy for each country over time using the mutate function and difference functions.  Lastly, we can drop all the NAs from the table that were from the first year data was collected for each country produced from the previous step:
+```{r}
+DT::datatable(gapminder_option5 <- gapminder %>% 
+  group_by(country) %>% 
+  arrange(year) %>% 
+  mutate(incLifeExp = difference(lifeExp)) %>%
+  tidyr::drop_na())
 ```
 
-
-
-
+Lets plot our data for increase in life expectancy vs. year, creating a new plot for each continent using facet_wrap.  The function geom_jitter was used to scatter the points slightly from left to right shown in yellow.  A linear regression line was plotted from the data points in magenta.
+```{r, fig.width = 11, fig.height = 8}
+ggplot(gapminder_option5, aes(year, incLifeExp)) +
+  facet_wrap(~ continent, nrow = 1) +
+  geom_jitter(alpha = 0.5, colour = 'yellow') +
+  geom_smooth(method = "lm", colour = 'magenta') +
+  ylab('increase in life expectancy') +
+  ggtitle('Increase in Life Expectancy over Time') +
+  theme_dark()
+```
+RESULTS:  For all 5 continents most countries have an increase in life expectancy.  The slope of the increase in life expectancy goes down over time for Africa, Asia, Americas, and Europe, but goes up for Oceania.  Africa has the most countries with decreases in life expectancy.
