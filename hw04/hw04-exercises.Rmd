@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "hw04-exercises"
 output: 
   html_document:
     keep_md: true
@@ -81,6 +81,9 @@ guest
 ```
 
 ```{r}
+email <- email %>%
+  rename(name = guest) %>%
+  separate_rows(name, sep = ", ")
 email
 ```
 
@@ -89,7 +92,9 @@ email
 For each guest in the guestlist (guest tibble), add a column for email address, which can be found in the email tibble.
 
 ```{r}
-left_join(guest, email, by = "name")
+guest %>%
+  left_join(email, by = "name") %>%
+  DT::datatable()
 ```
 
 ## 3.2
@@ -97,7 +102,7 @@ left_join(guest, email, by = "name")
 Who do we have emails for, yet are not on the guestlist?
 
 ```{r}
-
+setdiff(email$name, guest$name)
 ```
 
 ## 3.3
@@ -105,6 +110,8 @@ Who do we have emails for, yet are not on the guestlist?
 Make a guestlist that includes everyone we have emails for (in addition to those on the original guestlist).
 
 ```{r}
-
+guest %>%
+  full_join(email, by = "name") %>%
+  DT::datatable()
 ```
 
