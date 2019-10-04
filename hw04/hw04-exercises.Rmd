@@ -1,0 +1,110 @@
+---
+title: "Untitled"
+output: 
+  html_document:
+    keep_md: true
+    theme: paper
+---
+
+loads packages:
+```{r, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(gapminder)
+```
+
+# Exercise 1: Univariate Option 2
+
+Lets calculate the mean life expectancy for all combinations of continent and year from the gapminder dataset.  This is dont first by grouping continent and year together then using summarize to add a new column with the mean life expectancies (meanLifeExp). This will then be reshaped using pivot_wider to make one row per year and a new column for each continent with values for each of their mean life expectancies.
+```{r}
+gapminder_wider <-gapminder %>%
+  group_by(continent, year) %>% 
+  summarize(meanLifeExp = mean(lifeExp)) %>%
+  pivot_wider(id_cols = year,
+              names_from = continent,
+              values_from = meanLifeExp) 
+DT::datatable(gapminder_wider)
+```
+
+Lets plot the mean life expectancy of only the continent Africa over time:
+```{r}
+ggplot(gapminder_wider, aes(year, Africa)) +
+  geom_point(colour = "cyan", size = 3) +
+  theme_dark() +
+  ylab("mean life expectancy") +
+  ggtitle("Africa's mean life expectancy over time") +
+  geom_smooth(method = "lm", colour = 'magenta') 
+```
+
+
+Now we will reshape the data back to its longer format with pivot_longer:
+```{r}
+gapminder_wider %>%
+  pivot_longer(cols = c(Africa, Americas, Asia, Europe, Oceania),
+               names_to = "continent",
+               values_to = "meanLifeExp") %>%
+  DT::datatable()
+```
+
+# Exercise 2: Multivariate Option 1
+
+Lets filter gapminder for only the 2 countries Canada and Spain and select all variables except continent and population.  Next, we will reshape using pivot_wider to make a tibble with one row per year and columns for life expectancy and GDP per capita.
+```{r}
+gapminder_wider2 <-gapminder %>%
+  filter(country == "Canada" | country == "Spain") %>%
+  select(-continent, -pop) %>%
+  pivot_wider(id_cols = year,
+              names_from = country,
+              names_sep = "_",
+              values_from = c(lifeExp, gdpPercap))
+DT::datatable(gapminder_wider2)
+```
+
+Now we will reshape the data back to its longer format with pivot_longer:
+```{r}
+gapminder_wider2 %>%
+  pivot_longer(cols = -year,
+               names_to = c(".value", "country"),
+               names_sep = "_") %>%
+  DT::datatable()
+```
+
+# Exercise 3: Table Joins
+
+load datasets:
+```{r message=FALSE, warning=FALSE}
+guest <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/attend.csv")
+email <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/emails.csv")
+```
+
+```{r}
+guest
+```
+
+```{r}
+email
+```
+
+## 3.1
+
+For each guest in the guestlist (guest tibble), add a column for email address, which can be found in the email tibble.
+
+```{r}
+left_join(guest, email, by = "name")
+```
+
+## 3.2
+
+Who do we have emails for, yet are not on the guestlist?
+
+```{r}
+
+```
+
+## 3.3
+
+Make a guestlist that includes everyone we have emails for (in addition to those on the original guestlist).
+
+```{r}
+
+```
+
