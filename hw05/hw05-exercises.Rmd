@@ -1,0 +1,42 @@
+---
+title: "hw05-exercises"
+output: 
+  html_document:
+    keep_md: true
+    theme: paper
+--- 
+
+loads packages:
+```{r, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(gapminder)
+```
+
+# Exercise 1: Explain the value of the here::here package
+
+here::here gives you the ability to code a path name that is compatible across different operating systems.  Different operating systems have different syntax for paths. The here::here package enables others to run your code without requiring them to rewrite the paths for their specific platform syntax or to create new folders for where the files should be stored.  It does so by finding the root directory then the specific path desired in a format that is independent of the platform being used.  The code will still run if you move the file since you do not need to change the relative directory.  The code will still run if you open files outside of your Rstudio project.  The here::here package is beneficial as it simplifies the use of sub-directories for projects.
+
+
+# Exercise 2: Factor management
+
+Lets take the gapminder dataset and look continents to explore.  Using the class function we can check that continents is indeed a factor.  First, we will drop the factor levels by 
+
+```{r}
+class(gapminder$continent)
+nlevels(gapminder$continent)
+levels(gapminder$continent)
+
+gapminder1 <- gapminder %>%
+  mutate(continent_level = factor(case_when(TRUE ~ "a"),
+                             levels = "a")) %>%
+  droplevels()
+levels(gapminder1$continent)
+
+
+```
+
+
+```{r}
+gapminder 
+```
+
