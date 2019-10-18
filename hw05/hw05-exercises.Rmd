@@ -134,7 +134,7 @@ Lets save the last plot as a png.
 ggsave("newPlot.png", width = 5, height = 3, units = "in")
 ```
 
-Insert plot image:
+Insert plot image: 
 ![pic](newPlot.png)
 
 
