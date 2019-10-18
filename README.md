@@ -7,8 +7,8 @@ Assignment | Folder | Due Date
 Assignment 01 | [hw01](https://github.com/STAT545-UBC-hw-2019-20/stat545-hw-kristinawright/tree/master/hw01) | Sept. 17 
 Assignment 02 | [hw02](https://github.com/STAT545-UBC-hw-2019-20/stat545-hw-kristinawright/tree/master/hw02) | Sept. 24 
 Assignment 03 | [hw03](https://github.com/STAT545-UBC-hw-2019-20/stat545-hw-kristinawright/tree/master/hw03) | Oct. 01 
-Assignment 04 | hw04 | Oct. 08 
-Assignment 05 | hw05 | Oct. 18 
+Assignment 04 | [hw04](https://github.com/STAT545-UBC-hw-2019-20/stat545-hw-kristinawright/tree/master/hw04) | Oct. 08 
+Assignment 05 | [hw05](https://github.com/STAT545-UBC-hw-2019-20/stat545-hw-kristinawright/tree/master/hw05) | Oct. 18 
 
 ## About Me
 
