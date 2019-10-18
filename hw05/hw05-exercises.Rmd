@@ -136,6 +136,10 @@ ggsave("newPlot.png", width = 5, height = 3, units = "in")
 
 Insert plot image: 
 ![pic](newPlot.png)
+aksfbjbdfas]]\
+
+adfa
+
 
  
 
