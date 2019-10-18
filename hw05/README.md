@@ -2,4 +2,5 @@
 
 [click here to view the rendered html file for homework 5!](https://stat545-ubc-hw-2019-20.github.io/stat545-hw-kristinawright/hw05/hw05-exercises.html)
 
-![](SFU19-PB-3107.jpg)
+Here is a sneak peak:
+![](newPlot.png)
