@@ -19,21 +19,54 @@ here::here gives you the ability to code a path name that is compatible across d
 
 # Exercise 2: Factor management
 
-Lets take the gapminder dataset and look continents to explore.  Using the class function we can check that continents is indeed a factor.  First, we will drop the factor levels by 
+BEFORE REORDER: Lets take the gapminder dataset and look continents to explore.  Using the class function we can check that continents is indeed a factor, then check how many levels and what the levels are.  The first plot shows the order of the levels. The arrange function will order continent by the factor levels.
 
 ```{r}
 class(gapminder$continent)
 nlevels(gapminder$continent)
 levels(gapminder$continent)
 
+gapminder %>% 
+  ggplot(aes(continent, pop, fill= continent)) +
+  geom_col()
+
+gapminder %>%
+  arrange(continent) %>%
+  DT::datatable()
+
+```
+
+REORDER: We will first drop Oceania from the dataset using filter in a new dataframe called gapminder1.  ...reorder the levels according to ascending population using fct_reorder function to arrage the levels in a variable called continent_relevel.  In the new dataframe gapminder1 the continent_relevels replace the old levels.  We can now check the class, number of levels, and levels of gapminder1, and plot the dataframe containing the new levels.  The arrange function will order continent by the new factor levels.
+```{r}
 gapminder1 <- gapminder %>%
-  mutate(continent_level = factor(case_when(TRUE ~ "a"),
-                             levels = "a")) %>%
+  filter(continent == "Asia"| continent == "Americas" | continent ==  "Africa"| continent ==  "Europe") 
+
+levels(gapminder1$continent)  #check levels after Oceania removal
+gapminder1 <-gapminder1 %>%
   droplevels()
+levels(gapminder1$continent) #check levels after Oceania removal and dropping unused levels
+
+continent_relevel <-fct_reorder(gapminder1$continent, gapminder1$pop, max) %>%
+  levels()
+gapminder1$continent <- factor(gapminder1$continent, levels = continent_relevel)
+  
+ #check class, number of levels, levels after Oceania removal and reorder
+class(gapminder1$continent)  
+nlevels(gapminder1$continent)
 levels(gapminder1$continent)
 
 
+gapminder1 %>% 
+  ggplot(aes(continent, pop, fill= continent)) +
+  geom_col()
+
+gapminder1 %>%
+  arrange(continent) %>%
+  DT::datatable()
 ```
+
+
+# Exercise 3:
 
 
 ```{r}
