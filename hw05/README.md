@@ -1,0 +1,3 @@
+# Homework 5
+
+[click here to view the rendered html file for homework 4!](https://stat545-ubc-hw-2019-20.github.io/stat545-hw-kristinawright/hw05/hw05-exercises.html)
